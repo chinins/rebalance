@@ -23,11 +23,12 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon-upd.ico",
+              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.sass",
+              "src/theme.scss"
             ],
             "scripts": []
           },
@@ -76,11 +77,12 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.sass"
+              "src/styles.sass",
+              "src/theme.scss"
             ],
             "scripts": [],
             "assets": [
-              "src/favicon-upd.ico",
+              "src/favicon.ico",
               "src/assets"
             ]
           }
