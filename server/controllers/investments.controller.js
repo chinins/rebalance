@@ -42,6 +42,27 @@ module.exports.createUser = async (ctx, next) => {
   }
 };
 
+module.exports.getPortfolio = async (ctx, next) => {
+  const username = ctx.headers['x-user'];
+  if (!username) return await next();
+
+  const user = await Users.findOne({ username });
+
+  if (!user) {
+    ctx.body = {
+      Error: 'No user with this username'
+    };
+    ctx.status = 401;
+  } else if (!user.stocks && !user.bonds) {
+    ctx.body = {
+      Error: `No portfolio data for user ${username}.`,
+    };
+  } else {
+    ctx.body = user;
+    ctx.status = 200;
+  }
+};
+
 module.exports.addPortfolio = async (ctx, next) => {
   if (ctx.method != 'POST') return await next();
 
