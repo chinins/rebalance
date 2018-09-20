@@ -5,7 +5,7 @@ const bodyParser = require('koa-bodyparser');
 
 const app = new Koa();
 const router = require('./routes.js');
-const db = require('./db');
+// const db = require('./db');
 
 app
   .use(logger())
@@ -13,6 +13,6 @@ app
   .use(bodyParser())
   .use(router.routes());
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3002;
 // eslint-disable-next-line
 app.listen(port, () => console.log(`Server listening on port ${port}`));
