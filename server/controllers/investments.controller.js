@@ -22,6 +22,20 @@ module.exports.createUser = async (ctx, next) => {
   }
 };
 
-module.exports.addPortfolio = () => {
+module.exports.addPortfolio = async (ctx, next) => {
+  if (ctx.method != 'POST') return await next();
+
+  const userPortfolio = ctx.request.body;
+
+  ctx.body = await Users.findOneAndUpdate({ username: userPortfolio.username }, {
+    $set: {
+      stocks: userPortfolio.stocks,
+      bonds: userPortfolio.bonds,
+    },
+  });
+  ctx.status = 200;
+};
+
+const rebalance = () => {
 
 };
