@@ -1,4 +1,24 @@
+const _ = require('lodash');
 const Users = require('../db');
+
+function claculateDeviation(obj, price, totalSum) {
+  _.forIn(obj, (value, key, element) => {
+    element[key].valueToRebalance = (element[key].target
+      - element[key].units * price / totalSum) * totalSum;
+    element[key].unitsToRebalance = element[key].valueToRebalance / price;
+  });
+}
+
+const rebalance = (obj) => {
+  const price = 100;
+  const totalSum = _.reduce(obj.stocks, (sum, n) => sum + n.units * price, 0)
+    + _.reduce(obj.bonds, (sum, n) => sum + n.units * price, 0);
+  console.log(totalSum);
+  claculateDeviation(obj.stocks, price, totalSum);
+  claculateDeviation(obj.bonds, price, totalSum);
+
+  console.log(obj);
+};
 
 module.exports.createUser = async (ctx, next) => {
   if (ctx.method != 'POST') return await next();
@@ -34,8 +54,5 @@ module.exports.addPortfolio = async (ctx, next) => {
     },
   });
   ctx.status = 200;
-};
-
-const rebalance = () => {
-
+  rebalance(userPortfolio);
 };
