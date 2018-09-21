@@ -5,7 +5,6 @@ const bodyParser = require('koa-bodyparser');
 
 const app = new Koa();
 const router = require('./routes.js');
-// const db = require('./db');
 
 app
   .use(logger())
