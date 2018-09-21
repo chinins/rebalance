@@ -10,14 +10,10 @@ function claculateDeviation(obj, price, totalSum) {
 }
 
 const rebalance = (obj) => {
+  const { _id, username, ...filtered } = obj;
   const price = 100;
-  const totalSum = _.reduce(obj.stocks, (sum, n) => sum + n.units * price, 0)
-    + _.reduce(obj.bonds, (sum, n) => sum + n.units * price, 0);
-  console.log(totalSum);
-  claculateDeviation(obj.stocks, price, totalSum);
-  claculateDeviation(obj.bonds, price, totalSum);
-
-  console.log(obj);
+  const totalSum = _.reduce(filtered, (sum, n) => sum + n.units * price, 0);
+  claculateDeviation(filtered, price, totalSum);
 };
 
 module.exports.createUser = async (ctx, next) => {
@@ -45,6 +41,7 @@ module.exports.getPortfolio = async (ctx, next) => {
   if (!username) return await next();
 
   const user = await Users.findOne({ username });
+  rebalance(user);
 
   if (!user) {
     ctx.body = {
