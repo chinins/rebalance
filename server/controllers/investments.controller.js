@@ -26,6 +26,7 @@ const rebalance = async (user) => {
       ...acc,
       [key]: {
         ...filtered[key],
+        price: prices[key],
         value: Number(prices[key] * filtered[key].units).toFixed(0),
         valueToRebalance: Number((filtered[key].target - filtered[key].units * prices[key] / totalSum) * totalSum).toFixed(0),
         unitsToRebalance: Number(((filtered[key].target - filtered[key].units * prices[key] / totalSum) * totalSum) / prices[key]).toFixed(0),
@@ -106,4 +107,21 @@ module.exports.addIndexFund = async (ctx, next) => {
     },
   });
   ctx.status = 200;
+};
+
+module.exports.rebalancePortfolio = async (ctx, next) => {
+  const username = ctx.headers['x-user'];
+  if (!username) return await next();
+
+  const user = await Users.findOne({ username });
+
+  if (!user) {
+    ctx.body = {
+      Error: 'No user with this username',
+    };
+    ctx.status = 401;
+  } else {
+    ctx.body = await rebalance(user);
+    ctx.status = 200;
+  }
 };
