@@ -34,8 +34,6 @@ module.exports.createUser = async (ctx, next) => {
   } else {
     user = {
       username: userData.username,
-      stocks: 0,
-      bonds: 0,
     };
     ctx.body = await Users.insert(user);
     ctx.status = 200;
@@ -50,13 +48,9 @@ module.exports.getPortfolio = async (ctx, next) => {
 
   if (!user) {
     ctx.body = {
-      Error: 'No user with this username'
+      Error: 'No user with this username',
     };
     ctx.status = 401;
-  } else if (!user.stocks && !user.bonds) {
-    ctx.body = {
-      Error: `No portfolio data for user ${username}.`,
-    };
   } else {
     ctx.body = user;
     ctx.status = 200;
@@ -66,14 +60,34 @@ module.exports.getPortfolio = async (ctx, next) => {
 module.exports.addPortfolio = async (ctx, next) => {
   if (ctx.method != 'POST') return await next();
 
+  const username = ctx.headers['x-user'];
+  if (!username) return await next();
+
   const userPortfolio = ctx.request.body;
 
-  ctx.body = await Users.findOneAndUpdate({ username: userPortfolio.username }, {
+  ctx.body = await Users.findOneAndUpdate({ username }, {
     $set: {
-      stocks: userPortfolio.stocks,
-      bonds: userPortfolio.bonds,
+      ...userPortfolio,
     },
   });
   ctx.status = 200;
-  rebalance(userPortfolio);
+  // rebalance(userPortfolio);
+};
+
+module.exports.addIndexFund = async (ctx, next) => {
+  if (ctx.method != 'POST') return await next();
+
+  const username = ctx.headers['x-user'];
+  if (!username) return await next();
+
+  const indexFund = ctx.request.body;
+
+  const tickerKey = Object.keys(indexFund)[0];
+
+  ctx.body = await Users.findOneAndUpdate({ username }, {
+    $set: {
+      [`${tickerKey}`]: indexFund[tickerKey],
+    },
+  });
+  ctx.status = 200;
 };
