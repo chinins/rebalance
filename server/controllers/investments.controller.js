@@ -1,20 +1,38 @@
-const _ = require('lodash');
+// const _ = require('lodash');
+const axios = require('axios');
 const Users = require('../db');
 
-function claculateDeviation(obj, price, totalSum) {
-  _.forIn(obj, (value, key, element) => {
-    element[key].valueToRebalance = Number((element[key].target
-      - element[key].units * price / totalSum) * totalSum).toFixed(0);
-    element[key].unitsToRebalance = Number(element[key].valueToRebalance / price)
-      .toFixed(0);
-  });
-}
+const baseUrl = 'https://api.iextrading.com/1.0';
 
-const rebalance = (obj) => {
-  const { _id, username, ...filtered } = obj;
-  const price = 100;
-  const totalSum = _.reduce(filtered, (sum, n) => sum + n.units * price, 0);
-  claculateDeviation(filtered, price, totalSum);
+const rebalance = async (user) => {
+  const { _id, username, ...filtered } = user;
+
+  let prices = Object.keys(filtered).reduce(async (prices, key) => {
+    const price = await axios(`${baseUrl}/stock/${key}/price`);
+    prices = await prices;
+    return {
+      ...prices,
+      [key]: price.data,
+    };
+  }, {});
+
+  prices = await prices;
+
+  const totalSum = Object.keys(filtered).reduce((sum, n) => sum + filtered[n].units * prices[n], 0);
+
+  const filter = Object
+    .keys(filtered)
+    .reduce((acc, key) => ({
+      ...acc,
+      [key]: {
+        ...filtered[key],
+        value: Number(prices[key] * filtered[key].units).toFixed(0),
+        valueToRebalance: Number((filtered[key].target - filtered[key].units * prices[key] / totalSum) * totalSum).toFixed(0),
+        unitsToRebalance: Number(((filtered[key].target - filtered[key].units * prices[key] / totalSum) * totalSum) / prices[key]).toFixed(0),
+      },
+    }),
+    {});
+  return Object.assign(user, await filter);
 };
 
 module.exports.createUser = async (ctx, next) => {
@@ -41,8 +59,8 @@ module.exports.getPortfolio = async (ctx, next) => {
   const username = ctx.headers['x-user'];
   if (!username) return await next();
 
-  const user = await Users.findOne({ username });
-  rebalance(user);
+  let user = await Users.findOne({ username });
+  user = await rebalance(user);
 
   if (!user) {
     ctx.body = {
