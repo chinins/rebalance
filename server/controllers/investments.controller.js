@@ -3,9 +3,10 @@ const Users = require('../db');
 
 function claculateDeviation(obj, price, totalSum) {
   _.forIn(obj, (value, key, element) => {
-    element[key].valueToRebalance = (element[key].target
-      - element[key].units * price / totalSum) * totalSum;
-    element[key].unitsToRebalance = element[key].valueToRebalance / price;
+    element[key].valueToRebalance = Number((element[key].target
+      - element[key].units * price / totalSum) * totalSum).toFixed(0);
+    element[key].unitsToRebalance = Number(element[key].valueToRebalance / price)
+      .toFixed(0);
   });
 }
 
