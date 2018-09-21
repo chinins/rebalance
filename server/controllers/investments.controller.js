@@ -74,23 +74,6 @@ module.exports.getPortfolio = async (ctx, next) => {
   }
 };
 
-module.exports.addPortfolio = async (ctx, next) => {
-  if (ctx.method != 'POST') return await next();
-
-  const username = ctx.headers['x-user'];
-  if (!username) return await next();
-
-  const userPortfolio = ctx.request.body;
-
-  ctx.body = await Users.findOneAndUpdate({ username }, {
-    $set: {
-      ...userPortfolio,
-    },
-  });
-  ctx.status = 200;
-  // rebalance(userPortfolio);
-};
-
 module.exports.addIndexFund = async (ctx, next) => {
   if (ctx.method != 'POST') return await next();
 
