@@ -12,10 +12,10 @@ export class ApiClientService {
     private http: HttpClient
   ) { }
 
-  getUserPortfolio (): Observable<any> {
+  getUserPortfolio (username): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}`, {
       headers: {
-        'x-user': 'sobaka'
+        'x-user': username
       }
     });
   }

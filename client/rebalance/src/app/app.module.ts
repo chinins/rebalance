@@ -9,12 +9,14 @@ import { MatButtonModule, MatToolbarModule, MatCardModule, MatSelectModule } fro
 import { MatTableModule } from '@angular/material/table';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TableComponent } from './table/table.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    DashboardComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

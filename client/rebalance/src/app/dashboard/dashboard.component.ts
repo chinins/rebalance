@@ -19,8 +19,8 @@ export class DashboardComponent implements OnInit {
   }
 
   getUserPortfolio (): void {
-    this.client.getUserPortfolio()
-      .subscribe(userData => console.log(userData));
+    this.client.getUserPortfolio('sobaka')
+      .subscribe(userData => this.user = userData);
   }
 
 }
