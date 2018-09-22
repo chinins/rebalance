@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiClientService {
   private baseUrl: string = 'http://localhost:3002/rebalance';
+  private dataSource = new BehaviorSubject('');
+  currentMessage = this.dataSource.asObservable();
 
   constructor(
     private http: HttpClient
@@ -18,5 +20,9 @@ export class ApiClientService {
         'x-user': username
       }
     });
+  }
+
+  sendData(data: string) {
+    this.dataSource.next(data);
   }
 }

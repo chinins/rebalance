@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ApiClientService } from '../api-client.service';
 
 @Component({
@@ -7,7 +8,10 @@ import { ApiClientService } from '../api-client.service';
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
-  user: object [];
+  user: {
+    bonds: object [],
+    stocks: object []
+  };
 
   constructor(
     private client: ApiClientService
@@ -15,17 +19,27 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getUserPortfolio();
+
   }
 
   getUserPortfolio (): void {
     this.client.getUserPortfolio('sobaka')
       .subscribe(userData => {
-        const { _id, username, ...filtered } = userData;
-        console.log(userData);
-        console.log(filtered);
-        console.log(Object.keys(filtered));
-        return this.user = Object.values(filtered);
+        let { _id, username, ...filtered } = userData;
+        filtered = Object.values(filtered);
+        const bonds = filtered.filter(el => el.type === 'bonds');
+        const stocks = filtered.filter(el => el.type === 'stocks');
+        this.user = {
+          bonds,
+          stocks
+        };
+        this.client.sendData(JSON.stringify(this.user));
       });
   }
 
+  // getBonds (arr): void {
+  //   this.bonds = arr.filter(el => el.type === 'bonds');
+  //   console.log(this.bonds);
+  //   return this.bonds;
+  // }
 }

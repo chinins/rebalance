@@ -7,16 +7,14 @@ const baseUrl = 'https://api.iextrading.com/1.0';
 const rebalance = async (user) => {
   const { _id, username, ...filtered } = user;
 
-  let prices = Object.keys(filtered).reduce(async (prices, key) => {
+  const prices = await Object.keys(filtered).reduce(async (acc, key) => {
     const price = await axios(`${baseUrl}/stock/${key}/price`);
-    prices = await prices;
+    const prev = await acc;
     return {
-      ...prices,
+      ...prev,
       [key]: price.data,
     };
   }, {});
-
-  prices = await prices;
 
   const totalSum = Object.keys(filtered).reduce((sum, n) => sum + filtered[n].units * prices[n], 0);
 
@@ -37,8 +35,7 @@ const rebalance = async (user) => {
   return Object.assign(user, await filter);
 };
 
-module.exports.createUser = async (ctx, next) => {
-  if (ctx.method != 'POST') return await next();
+module.exports.createUser = async (ctx) => {
   const userData = ctx.request.body;
 
   let user = await Users.findOne({ username: userData.username });
@@ -59,7 +56,7 @@ module.exports.createUser = async (ctx, next) => {
 
 module.exports.getPortfolio = async (ctx, next) => {
   const username = ctx.headers['x-user'];
-  if (!username) return await next();
+  if (!username) return next();
 
   let user = await Users.findOne({ username });
   user = await rebalance(user);
@@ -76,10 +73,8 @@ module.exports.getPortfolio = async (ctx, next) => {
 };
 
 module.exports.addIndexFund = async (ctx, next) => {
-  if (ctx.method != 'POST') return await next();
-
   const username = ctx.headers['x-user'];
-  if (!username) return await next();
+  if (!username) return next();
 
   const indexFund = ctx.request.body;
 
@@ -95,7 +90,7 @@ module.exports.addIndexFund = async (ctx, next) => {
 
 module.exports.rebalancePortfolio = async (ctx, next) => {
   const username = ctx.headers['x-user'];
-  if (!username) return await next();
+  if (!username) return next();
 
   const user = await Users.findOne({ username });
 
