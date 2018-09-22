@@ -1,6 +1,7 @@
 // const _ = require('lodash');
 const axios = require('axios');
 const Users = require('../db');
+const names = require('../ticker-to-names');
 
 const baseUrl = 'https://api.iextrading.com/1.0';
 
@@ -26,9 +27,10 @@ const rebalance = async (user) => {
         ...filtered[key],
         ticker: key,
         price: prices[key],
-        value: Number(prices[key] * filtered[key].units).toFixed(0),
-        valueToRebalance: Number((filtered[key].target - filtered[key].units * prices[key] / totalSum) * totalSum).toFixed(0),
-        unitsToRebalance: Number(((filtered[key].target - filtered[key].units * prices[key] / totalSum) * totalSum) / prices[key]).toFixed(0),
+        name: names[key],
+        value: Number(Number(prices[key] * filtered[key].units).toFixed(0)),
+        valueToRebalance: Number(Number((filtered[key].target - filtered[key].units * prices[key] / totalSum) * totalSum).toFixed(0)),
+        unitsToRebalance: Number(Number(((filtered[key].target - filtered[key].units * prices[key] / totalSum) * totalSum) / prices[key]).toFixed(0)),
       },
     }),
     {});
