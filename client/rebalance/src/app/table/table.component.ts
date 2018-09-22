@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-table',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./table.component.sass']
 })
 export class TableComponent implements OnInit {
+  @Input() user: {};
+  displayedColumns: string[] = ['ticker', 'name', 'units', 'value', 'target'];
+  dataSource = this.user;
 
   constructor() { }
 

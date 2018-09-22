@@ -7,7 +7,7 @@ import { ApiClientService } from '../api-client.service';
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
-  user: {};
+  user: object [];
 
   constructor(
     private client: ApiClientService
@@ -15,12 +15,17 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getUserPortfolio();
-    // console.log(this.user);
   }
 
   getUserPortfolio (): void {
     this.client.getUserPortfolio('sobaka')
-      .subscribe(userData => this.user = userData);
+      .subscribe(userData => {
+        const { _id, username, ...filtered } = userData;
+        console.log(userData);
+        console.log(filtered);
+        console.log(Object.keys(filtered));
+        return this.user = Object.values(filtered);
+      });
   }
 
 }

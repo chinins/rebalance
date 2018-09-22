@@ -26,6 +26,7 @@ const rebalance = async (user) => {
       ...acc,
       [key]: {
         ...filtered[key],
+        ticker: key,
         price: prices[key],
         value: Number(prices[key] * filtered[key].units).toFixed(0),
         valueToRebalance: Number((filtered[key].target - filtered[key].units * prices[key] / totalSum) * totalSum).toFixed(0),
