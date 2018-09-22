@@ -1,15 +1,15 @@
 <!-- 2nd table -->
 <table mat-table [dataSource]="user.bonds">
-  <ng-container matColumnDef="ticker">
+  <!-- <ng-container matColumnDef="ticker">
     <th mat-header-cell *matHeaderCellDef class="table-column">Ticker</th>
     <td mat-cell *matCellDef="let element">{{element.ticker}}</td>
     <td mat-footer-cell *matFooterCellDef colspan="1">Total Bonds</td>
-  </ng-container>
+  </ng-container> -->
 
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef class="table-column">Index</th>
-    <td mat-cell *matCellDef="let element">{{element.type}}</td>
-    <td mat-footer-cell *matFooterCellDef></td>
+    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    <td mat-footer-cell *matFooterCellDef colspan="1">Total Bonds</td>
   </ng-container>
 
   <ng-container matColumnDef="units">
@@ -37,14 +37,14 @@
 
 <!-- 2nd table -->
 <table mat-table [dataSource]="user.stocks">
-  <ng-container matColumnDef="ticker">
+  <!-- <ng-container matColumnDef="ticker">
     <td mat-cell *matCellDef="let element">{{element.ticker}}</td>
     <td mat-footer-cell *matFooterCellDef class="table-column">Total Stocks</td>
-  </ng-container>
+  </ng-container> -->
 
   <ng-container matColumnDef="name">
-    <td mat-cell *matCellDef="let element">{{element.type}}</td>
-    <td mat-footer-cell *matFooterCellDef class="table-column"></td>
+    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    <td mat-footer-cell *matFooterCellDef class="table-column">Total Stocks</td>
 
   </ng-container>
 
@@ -64,7 +64,7 @@
   </ng-container>
 
   <ng-container matColumnDef="totalPortfolio">
-    <td mat-footer-cell *matFooterCellDef colspan="2">
+    <td mat-footer-cell *matFooterCellDef colspan="1">
       Total Portfolio
     </td>
   </ng-container>

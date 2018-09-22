@@ -12,7 +12,7 @@ export class TableComponent implements OnInit {
     bonds: {}[]
     stocks: {}[]
   }[];
-  displayedColumns: string[] = ['ticker', 'name', 'units', 'value', 'target'];
+  displayedColumns: string[] = ['name', 'units', 'value', 'target'];
   totalUnits: number;
   totalValue: number;
   data: object;
