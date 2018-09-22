@@ -12,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TableComponent } from './table/table.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { AppRoutingModule } from './/app-routing.module';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
     MatTableModule,
     MatInputModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
