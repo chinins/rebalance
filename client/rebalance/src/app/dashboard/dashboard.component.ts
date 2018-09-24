@@ -34,7 +34,6 @@ export class DashboardComponent implements OnInit {
       filtered = Object.values(filtered);
       const bonds = filtered.filter(el => el.type === 'bonds');
       const stocks = filtered.filter(el => el.type === 'stocks');
-      console.log('got here');
         this.user = {
           bonds,
           stocks

@@ -82,7 +82,6 @@ module.exports.addIndexFund = async (ctx, next) => {
   const indexFund = ctx.request.body;
 
   const tickerKey = Object.keys(indexFund)[0];
-
   ctx.body = await Users.findOneAndUpdate({ username }, {
     $set: {
       [`${tickerKey}`]: indexFund[tickerKey],

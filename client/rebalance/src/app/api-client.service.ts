@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiClientService {
-  private baseUrl: string = 'http://localhost:3002/rebalance';
+  private baseUrl: string = 'http://localhost:3002';
   private dataSource = new BehaviorSubject('');
   currentMessage = this.dataSource.asObservable();
 
@@ -15,9 +15,17 @@ export class ApiClientService {
   ) { }
 
   getUserPortfolio (username): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}`, {
+    return this.http.get<any>(`${this.baseUrl}/rebalance`, {
       headers: {
         'x-user': username
+      }
+    });
+  }
+
+  postIndexData (indexFund, username): Observable<object> {
+    return this.http.post(`${this.baseUrl}/portfolio`, indexFund, {
+      headers: {
+        'x-user': username,
       }
     });
   }

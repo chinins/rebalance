@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiClientService } from '../api-client.service';
 import { UserInput } from '../user-input';
 
+const _ = require('lodash');
+
 @Component({
   selector: 'app-input-table',
   templateUrl: './input-table.component.html',
@@ -14,11 +16,8 @@ export class InputTableComponent implements OnInit {
   }[];
   displayedColumns: string[] = ['name', 'units', 'target'];
   data: object;
-  // userInput = new UserInput();
-  // inputArr = Object.values(this.userInput);
   bonds: {} [];
   stocks: {} [];
-
 
   getTotal (arr, key): number {
     return arr.reduce((acc, el) => acc + el[key], 0);
@@ -40,9 +39,20 @@ export class InputTableComponent implements OnInit {
 
   bondsValuechange(newValue, el, key) {
     this.bonds.find(element => element.ticker === el.ticker)[key] = newValue;
-
-    console.log(this.bonds);
+    const ticker = el.ticker;
+    const indexFund = {
+      [`${ticker}`]: {
+        type: el.type,
+        units: el.units,
+        target: el.target
+      }
+    };
+    // _.throttle(this.client.postIndexData(indexFund, 'sobaka')
+    //   .subscribe(() => console.log(indexFund)), 3000);
+    this.client.postIndexData(indexFund, 'sobaka')
+      .subscribe(() => console.log(indexFund));
   }
+
 
   stocksValuechange(newValue, el, key) {
     this.stocks.find(element => element.ticker === el.ticker)[key] = newValue;
