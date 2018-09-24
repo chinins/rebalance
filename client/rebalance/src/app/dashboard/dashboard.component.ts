@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiClientService } from '../api-client.service';
 
@@ -22,13 +22,19 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  onChanges() {
+    // this.getUserPortfolio();
+  }
+
   getUserPortfolio (): void {
+
     this.client.getUserPortfolio('sobaka')
-      .subscribe(userData => {
-        let { _id, username, ...filtered } = userData;
-        filtered = Object.values(filtered);
-        const bonds = filtered.filter(el => el.type === 'bonds');
-        const stocks = filtered.filter(el => el.type === 'stocks');
+    .subscribe(userData => {
+      let { _id, username, ...filtered } = userData;
+      filtered = Object.values(filtered);
+      const bonds = filtered.filter(el => el.type === 'bonds');
+      const stocks = filtered.filter(el => el.type === 'stocks');
+      console.log('got here');
         this.user = {
           bonds,
           stocks

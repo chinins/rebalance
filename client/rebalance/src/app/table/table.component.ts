@@ -1,10 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiClientService } from '../api-client.service';
+import { UserService } from '../user.service';
+
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.sass']
+  styleUrls: ['./table.component.sass'],
+  providers: [UserService]
 })
 export class TableComponent implements OnInit {
   @Input() user: {
