@@ -27,6 +27,14 @@ export class RebalanceTableComponent implements OnInit {
     this.route.parent.params.subscribe(params => this.username = params.username);
   }
 
+  onClick (confirmed) {
+    if (!confirmed) {
+      return;
+    }
+    this.client.confirmRebalance(this.username, confirmed)
+      .subscribe(() => console.log('rebalance confirmed'));
+  }
+
   ngOnInit() {
     this.client.rebalance(this.username)
       .subscribe(userData => {
