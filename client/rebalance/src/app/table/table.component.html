@@ -83,6 +83,6 @@
     <tr mat-footer-row *matFooterRowDef="['totalPortfolio', 'totalValue', 'totalPercent', 'currentPercent']"></tr>
   </table>
 
-  <button mat-raised-button color="warn">Rebalance</button>
+  <button mat-raised-button color="warn" [routerLink]="['../rebalance']">Rebalance</button>
 
 </div>

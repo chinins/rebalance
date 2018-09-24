@@ -36,6 +36,14 @@ export class ApiClientService {
     });
   }
 
+  rebalance (username): Observable<any> {
+    return this.http.get(`${this.baseUrl}/rebalance`, {
+      headers: {
+        'x-user': username,
+      }
+    });
+  }
+
   sendData(data: string) {
     this.dataSource.next(data);
   }

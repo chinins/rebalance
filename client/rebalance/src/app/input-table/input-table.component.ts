@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiClientService } from '../api-client.service';
 import { UserInput } from '../user-input';
+import { ActivatedRoute } from '@angular/router';
 
 const _ = require('lodash');
 
@@ -10,22 +11,26 @@ const _ = require('lodash');
   styleUrls: ['./input-table.component.sass']
 })
 export class InputTableComponent implements OnInit {
-  @Input() user: {
-    bonds: {}[]
-    stocks: {}[]
-  }[];
+  // @Input() user: {
+  //   bonds: {}[]
+  //   stocks: {}[]
+  // }[];
   displayedColumns: string[] = ['name', 'units', 'target'];
   data: object;
   bonds: {} [];
   stocks: {} [];
+  username: string;
 
   getTotal (arr, key): number {
     return arr.reduce((acc, el) => acc + el[key], 0);
   }
 
   constructor(
-    private client: ApiClientService
-  ) { }
+    private client: ApiClientService,
+    private route: ActivatedRoute
+  ) {
+    this.route.parent.params.subscribe(params => this.username = params.username);
+  }
 
   ngOnInit() {
     const userInput = new UserInput();
@@ -44,19 +49,27 @@ export class InputTableComponent implements OnInit {
       [`${ticker}`]: {
         type: el.type,
         units: el.units,
-        target: el.target
+        target: el.target / 100
       }
     };
     // _.throttle(this.client.postIndexData(indexFund, 'sobaka')
     //   .subscribe(() => console.log(indexFund)), 3000);
-    this.client.postIndexData(indexFund, 'sobaka')
+    this.client.postIndexData(indexFund, this.username)
       .subscribe(() => console.log(indexFund));
   }
 
 
   stocksValuechange(newValue, el, key) {
     this.stocks.find(element => element.ticker === el.ticker)[key] = newValue;
-
-    console.log(this.stocks);
+    const ticker = el.ticker;
+    const indexFund = {
+      [`${ticker}`]: {
+        type: el.type,
+        units: el.units,
+        target: el.target / 100
+      }
+    };
+    this.client.postIndexData(indexFund, this.username)
+    .subscribe(() => console.log(indexFund));
   }
 }
