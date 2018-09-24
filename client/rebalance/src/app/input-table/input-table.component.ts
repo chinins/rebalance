@@ -16,6 +16,9 @@ export class InputTableComponent implements OnInit {
   totalValue: number;
   data: object;
 
+  
+
+
   getTotal (arr, key): number {
     return arr.reduce((acc, el) => acc + el[key], 0);
   }
