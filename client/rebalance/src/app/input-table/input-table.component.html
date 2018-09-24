@@ -10,17 +10,17 @@
   <ng-container matColumnDef="units">
     <th mat-header-cell *matHeaderCellDef class="table-column">Units</th>
     <td mat-cell *matCellDef="let element">
-      <input [ngModel]="element.units" (ngModelChange)="valuechange($event, element)" type="number" placeholder={{element.units}}>
+      <input [ngModel]="element.units" (ngModelChange)="bondsValuechange($event, element, 'units')" type="number" placeholder="0">
     </td>
-    <td mat-footer-cell *matFooterCellDef>{{getTotal(data.bonds, 'units')}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{getTotal(bonds, 'units')}}</td>
   </ng-container>
 
   <ng-container matColumnDef="target">
-    <th mat-header-cell *matHeaderCellDef class="table-column">Target Allocation</th>
+    <th mat-header-cell *matHeaderCellDef class="table-column">Target Allocation, %</th>
     <td mat-cell *matCellDef="let element">
-      <input placeholder="%">
+      <input [ngModel]="element.target" (ngModelChange)="bondsValuechange($event, element, 'target')" type="number" placeholder="0">
     </td>
-    <td mat-footer-cell *matFooterCellDef>{{getTotal(data.bonds, 'target')*100}}%</td>
+    <td mat-footer-cell *matFooterCellDef>{{getTotal(bonds, 'target')}}%</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -37,16 +37,16 @@
 
   <ng-container matColumnDef="units">
     <td mat-cell *matCellDef="let element">
-        <input placeholder="Units">
+      <input [ngModel]="element.units" (ngModelChange)="stocksValuechange($event, element, 'units')" type="number" placeholder="0">
     </td>
-    <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(data.stocks, 'units')}}</td>
+    <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(stocks, 'units')}}</td>
   </ng-container>
 
   <ng-container matColumnDef="target">
     <td mat-cell *matCellDef="let element">
-      <input placeholder="%">
+        <input [ngModel]="element.target" (ngModelChange)="stocksValuechange($event, element, 'target')" type="number" placeholder="0">
     </td>
-    <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(data.stocks, 'target')*100}}%</td>
+    <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(stocks, 'target')}}%</td>
   </ng-container>
 
   <ng-container matColumnDef="totalPortfolio">
@@ -57,12 +57,12 @@
 
   <ng-container matColumnDef="totalValue">
     <td mat-footer-cell *matFooterCellDef>
-      {{getTotal(data.stocks, 'units') + getTotal(data.stocks, 'units')}}
+      {{getTotal(stocks, 'units') + getTotal(bonds, 'units')}}
     </td>
   </ng-container>
   <ng-container matColumnDef="totalPercent">
     <td mat-footer-cell *matFooterCellDef>
-        {{getTotal(data.stocks, 'target') * 100 + getTotal(data.bonds, 'target') * 100}}%
+        {{getTotal(stocks, 'target') + getTotal(bonds, 'target')}}%
     </td>
   </ng-container>
 

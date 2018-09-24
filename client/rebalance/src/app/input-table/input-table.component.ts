@@ -30,20 +30,23 @@ export class InputTableComponent implements OnInit {
 
   ngOnInit() {
     const userInput = new UserInput();
-
     const inputArr = Object.values(userInput);
     this.bonds = inputArr.filter(el => el.type === 'bonds');
-    // console.log(this.inputArr);
     this.stocks = inputArr.filter(el => el.type === 'stocks');
-    // console.log(stocks);
     this.client.currentMessage.subscribe((msg) => {
       const user = this.data = JSON.parse(msg);
     });
   }
 
-  valuechange(newValue, el) {
-    this.bonds.find(element => element.ticker === el.ticker).units = newValue;
+  bondsValuechange(newValue, el, key) {
+    this.bonds.find(element => element.ticker === el.ticker)[key] = newValue;
 
-    console.log(this.bonds)
+    console.log(this.bonds);
+  }
+
+  stocksValuechange(newValue, el, key) {
+    this.stocks.find(element => element.ticker === el.ticker)[key] = newValue;
+
+    console.log(this.stocks);
   }
 }
