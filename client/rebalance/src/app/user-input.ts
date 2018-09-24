@@ -1,58 +1,58 @@
 export class UserInput {
-  VTI: {
+  VTI: object = {
       ticker: 'VTI',
       name: 'US Total Stocks',
-      type: 'stoks',
-      target: number,
-      units: number,
+      type: 'stocks',
+      target: 0,
+      units: 0
   };
-  VOO: {
+  VOO: object = {
     ticker: 'VOO',
     name: 'S&P 500',
     type: 'stocks',
-    target: number,
-    units: number,
+    target: 0,
+    units: 0,
   };
-  VUG: {
+  VUG: object = {
     ticker: 'VUG',
     name: 'US Coprs',
     type: 'stocks',
-    target: number,
-    units: number,
+    target: 0,
+    units: 0,
   };
-  VEA: {
+  VEA: object = {
     ticker: 'VEA',
     name: 'Develpd Mkt',
     type: 'stocks',
-    target: number,
-    units: number,
+    target: 0,
+    units: 0,
   };
-  VWO: {
+  VWO: object = {
     ticker: 'VWO',
     name: 'Emerging Mkt',
     type: 'stocks',
-    target: number,
-    units: number,
+    target: 0,
+    units: 0,
   };
-  BND: {
+  BND: object = {
     ticker: 'BND',
     name: 'US Total Bonds',
     type: 'bonds',
-    target: number,
-    units: number,
+    target: 0,
+    units: 0,
   };
-  BSV: {
+  BSV: object = {
     ticker: 'BSV',
     name: 'Short-term Bonds',
     type: 'bonds',
-    target: number,
-    units: number,
+    target: 0,
+    units: 0,
   };
-  VCSH: {
+  VCSH: object = {
     ticker: 'VCSH',
     name: 'Corporate Bonds',
     type: 'bonds',
-    target: number,
-    units: number,
+    target: 0,
+    units: 0,
   };
 }
