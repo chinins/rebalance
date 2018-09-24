@@ -2,16 +2,16 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiClientService } from '../api-client.service';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.sass']
+  selector: 'app-input-table',
+  templateUrl: './input-table.component.html',
+  styleUrls: ['./input-table.component.sass']
 })
-export class TableComponent implements OnInit {
+export class InputTableComponent implements OnInit {
   @Input() user: {
     bonds: {}[]
     stocks: {}[]
   }[];
-  displayedColumns: string[] = ['name', 'value', 'target', 'current-allocation'];
+  displayedColumns: string[] = ['name', 'units', 'target'];
   totalUnits: number;
   totalValue: number;
   data: object;

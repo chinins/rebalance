@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TableComponent } from './table/table.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { InputTableComponent } from './input-table/input-table.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AppRoutingModule } from './/app-routing.module';
     AppComponent,
     DashboardComponent,
     TableComponent,
-    SignInComponent
+    SignInComponent,
+    InputTableComponent
   ],
   imports: [
     BrowserModule,
