@@ -1,0 +1,82 @@
+<!-- 1st table -->
+<table mat-table [dataSource]="user.bonds">
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef class="table-column">Index</th>
+    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    <td mat-footer-cell *matFooterCellDef colspan="1">Total Bonds</td>
+  </ng-container>
+
+  <ng-container matColumnDef="final-value">
+    <th mat-header-cell *matHeaderCellDef class="table-column">Final Value</th>
+    <td mat-cell *matCellDef="let element">{{element.value + element.valueToRebalance}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{getTotal(data.bonds, 'value') + getTotal(data.bonds, 'valueToRebalance')}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="units-to-rebalance">
+    <th mat-header-cell *matHeaderCellDef class="table-column">Units to buy/sell</th>
+    <td mat-cell *matCellDef="let element">{{element.unitsToRebalance}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{getTotal(data.bonds, 'unitsToRebalance')}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="current-allocation">
+    <th mat-header-cell *matHeaderCellDef class="table-column">Corresponding Value</th>
+    <td mat-cell *matCellDef="let element">{{element.valueToRebalance}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{getTotal(data.bonds, 'valueToRebalance')}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+</table>
+
+<!-- 2nd table -->
+<table mat-table [dataSource]="user.stocks">
+
+  <ng-container matColumnDef="name">
+    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    <td mat-footer-cell *matFooterCellDef class="table-column">Total Stocks</td>
+  </ng-container>
+
+  <ng-container matColumnDef="final-value">
+    <td mat-cell *matCellDef="let element">{{element.value + element.valueToRebalance}}</td>
+    <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(data.stocks, 'value') + getTotal(data.stocks, 'valueToRebalance')}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="units-to-rebalance">
+    <td mat-cell *matCellDef="let element">{{element.unitsToRebalance}}</td>
+    <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(data.stocks, 'unitsToRebalance')}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="current-allocation">
+    <td mat-cell *matCellDef="let element">{{element.valueToRebalance}}</td>
+    <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(data.stocks, 'valueToRebalance')}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalPortfolio">
+    <td mat-footer-cell *matFooterCellDef colspan="1">
+      Total Portfolio
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalValue">
+    <td mat-footer-cell *matFooterCellDef>
+      {{getTotal(data.stocks, 'value') + getTotal(data.stocks, 'value')}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="unitsToRebalance">
+    <td mat-footer-cell *matFooterCellDef>
+        {{getTotal(data.stocks, 'unitsToRebalance') + getTotal(data.bonds, 'unitsToRebalance')}}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="valueToRebalance">
+    <td mat-footer-cell *matFooterCellDef>
+      {{(getTotal(data.stocks, 'valueToRebalance') + getTotal(data.bonds, 'valueToRebalance'))}}
+    </td>
+  </ng-container>
+
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+  <tr mat-footer-row *matFooterRowDef="['totalPortfolio', 'unitsToRebalance', 'valueToRebalance', 'totalValue']"></tr>
+</table>

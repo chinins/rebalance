@@ -14,6 +14,7 @@ import { TableComponent } from './table/table.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { InputTableComponent } from './input-table/input-table.component';
+import { RebalanceTableComponent } from './rebalance-table/rebalance-table.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { InputTableComponent } from './input-table/input-table.component';
     DashboardComponent,
     TableComponent,
     SignInComponent,
-    InputTableComponent
+    InputTableComponent,
+    RebalanceTableComponent
   ],
   imports: [
     BrowserModule,

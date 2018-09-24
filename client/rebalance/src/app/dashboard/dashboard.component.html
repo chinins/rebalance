@@ -1,5 +1,7 @@
 <div *ngIf="user">
-  <app-input-table [user]="user"></app-input-table>
+  <app-rebalance-table [user]="user"></app-rebalance-table>
+  <p> Break between 2 pages</p>
+  <app-input-table></app-input-table>
   <p> Break between 2 pages</p>
   <app-table [user]="user"></app-table>
   <button mat-raised-button color="warn">Rebalance</button>
