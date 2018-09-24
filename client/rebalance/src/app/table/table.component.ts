@@ -8,10 +8,10 @@ import { ApiClientService } from '../api-client.service';
   styleUrls: ['./table.component.sass']
 })
 export class TableComponent implements OnInit {
-  @Input() user: {
-    bonds: {}[]
-    stocks: {}[]
-  }[];
+  // @Input() user: {
+  //   bonds: {}[]
+  //   stocks: {}[]
+  // }[];
   displayedColumns: string[] = ['name', 'value', 'target', 'current-allocation'];
   data: object;
 
@@ -24,8 +24,21 @@ export class TableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.client.currentMessage.subscribe((msg) => {
-      const user = this.data = JSON.parse(msg);
-    });
+    this.client.getUserPortfolio('sobaka')
+      .subscribe(userData => {
+        let { _id, username, ...filtered } = userData;
+        filtered = Object.values(filtered);
+        const bonds = filtered.filter(el => el.type === 'bonds');
+        const stocks = filtered.filter(el => el.type === 'stocks');
+        this.data = {
+          bonds,
+          stocks
+        };
+        console.log(this.data);
+      });
+
+    // this.client.currentMessage.subscribe((msg) => {
+    //   this.data = JSON.parse(msg);
+    // });
   }
 }
