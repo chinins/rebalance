@@ -1,8 +1,31 @@
-<div>
-  <label>Username
+<div class="signin-form">
+  <label>username
     <mat-form-field>
-      <input matInput [(ngModel)]="username" placeholder="username">
+      <input matInput [(ngModel)]="username" value="username" placeholder="username">
     </mat-form-field>
   </label>
-  <button mat-raised-button color="accent">Login</button>
+  <!-- <label>email
+      <mat-form-field>
+        <input matInput [ngModel]="email" value="email" placeholder="email">
+      </mat-form-field>
+  </label> -->
+
+  <a href="/dashboard/{{username}}/current">
+    <button mat-raised-button color="accent" >Login</button>
+  </a>
+
+  <label>username
+    <mat-form-field>
+      <input matInput [(ngModel)]="usernameNew" value="username" placeholder="username">
+    </mat-form-field>
+  </label>
+  <!-- <label>email
+      <mat-form-field>
+        <input matInput [ngModel]="email" value="email" placeholder="email">
+      </mat-form-field>
+  </label> -->
+
+  <a href="/dashboard/{{usernameNew}}/input">
+    <button mat-raised-button color="accent" (click)="onClick()">Create user</button>
+  </a>
 </div>

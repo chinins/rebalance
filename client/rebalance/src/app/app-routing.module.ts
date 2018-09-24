@@ -9,12 +9,12 @@ import { TableComponent } from './table/table.component';
 const routes: Routes = [
   { path: '', redirectTo: '/signin', pathMatch: 'full'},
   // { path: 'input', component: DashboardComponent },
-  { path: 'portfolio', component: DashboardComponent },
+  // { path: 'portfolio', component: DashboardComponent },
   {
-    path: 'dashboard',
+    path: 'dashboard/:username',
     component: DashboardComponent,
     children: [
-      { path: '', redirectTo: 'dashboard/current', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard/:username/current', pathMatch: 'full' },
       { path: 'input', component: InputTableComponent },
       { path: 'current', component: TableComponent },
       { path: 'rebalance', component: RebalanceTableComponent }

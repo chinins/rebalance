@@ -30,6 +30,12 @@ export class ApiClientService {
     });
   }
 
+  createUser (username): Observable<any> {
+    return this.http.post(`${this.baseUrl}/user`, {
+        'username': `${username}`
+    });
+  }
+
   sendData(data: string) {
     this.dataSource.next(data);
   }

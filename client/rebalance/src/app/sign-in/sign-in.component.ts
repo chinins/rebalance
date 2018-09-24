@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiClientService } from '../api-client.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -7,14 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignInComponent implements OnInit {
   username: string;
+  email: string;
+  usernameNew: string;
 
-  constructor() { }
-
-  ngOnChange() {
-    console.log(this.username);
-  }
+  constructor(
+    private client: ApiClientService
+  ) { }
 
   ngOnInit() {
   }
 
+  onClick() {
+    this.client.createUser(this.usernameNew)
+      .subscribe(() => console.log('got here'));
+  }
 }
