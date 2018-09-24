@@ -106,3 +106,20 @@ module.exports.rebalancePortfolio = async (ctx, next) => {
     ctx.status = 200;
   }
 };
+
+module.exports.confirmRebalance = async (ctx, next) => {
+  const username = ctx.headers['x-user'];
+  if (!username) return next();
+
+  const user = await Users.findOne({ username });
+
+  if (!user) {
+    ctx.body = {
+      Error: 'No user with this username',
+    };
+    ctx.status = 401;
+  } else {
+    // ctx.body = await rebalance(user);
+    ctx.status = 200;
+  }
+};
