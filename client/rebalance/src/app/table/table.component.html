@@ -1,30 +1,32 @@
-<div *ngIf="data">
+<div *ngIf="data" class="container">
+
+  <div class="current-title">current portfolio</div>
 
   <!-- 1st table -->
   <table mat-table [dataSource]="data.bonds">
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef class="table-column">Index</th>
-      <td mat-cell *matCellDef="let element">{{element.name}}</td>
-      <td mat-footer-cell *matFooterCellDef colspan="1">Total Bonds</td>
+      <th mat-header-cell *matHeaderCellDef class="column-name-first">Index</th>
+      <td mat-cell *matCellDef="let element" class="column-name-first">{{element.name}}</td>
+      <td mat-footer-cell *matFooterCellDef colspan="1" class="column-name-first">Total Bonds</td>
     </ng-container>
 
     <ng-container matColumnDef="value">
-      <th mat-header-cell *matHeaderCellDef class="table-column">Value, $</th>
-      <td mat-cell *matCellDef="let element">{{element.value | currency: 'USD' : 'symbol' : '1.0'}}</td>
-      <td mat-footer-cell *matFooterCellDef>{{getTotal(data.bonds, 'value') | currency: 'USD' : 'symbol' : '1.0'}}</td>
+      <th mat-header-cell *matHeaderCellDef class="table-column-value-first">Value, $</th>
+      <td mat-cell *matCellDef="let element" class="table-column-value-first">{{element.value | currency: 'USD' : 'symbol' : '1.0'}}</td>
+      <td mat-footer-cell *matFooterCellDef class="table-column-value-first">{{getTotal(data.bonds, 'value') | currency: 'USD' : 'symbol' : '1.0'}}</td>
     </ng-container>
 
     <ng-container matColumnDef="target">
-      <th mat-header-cell *matHeaderCellDef class="table-column">Target Allocation</th>
-      <td mat-cell *matCellDef="let element">{{element.target /1000 | percent}}</td>
-      <td mat-footer-cell *matFooterCellDef>{{getTotal(data.bonds, 'target') /1000 | percent}}</td>
+      <th mat-header-cell *matHeaderCellDef class="table-column-target-first">Target Allocation</th>
+      <td mat-cell *matCellDef="let element" class="table-column-target-first">{{element.target /1000 | percent}}</td>
+      <td mat-footer-cell *matFooterCellDef class="table-column-target-first">{{getTotal(data.bonds, 'target') /1000 | percent}}</td>
     </ng-container>
 
     <ng-container matColumnDef="current-allocation">
-      <th mat-header-cell *matHeaderCellDef class="table-column">Current Allocation</th>
-      <td mat-cell *matCellDef="let element">{{element.currentAlloc/1000 | percent}}</td>
-      <td mat-footer-cell *matFooterCellDef>{{getTotal(data.bonds, 'currentAlloc')/1000 | percent}}</td>
+      <th mat-header-cell *matHeaderCellDef class="table-column-curralloc">Current Allocation</th>
+      <td mat-cell *matCellDef="let element" class="table-column-curralloc">{{element.currentAlloc/1000 | percent}}</td>
+      <td mat-footer-cell *matFooterCellDef class="table-column-curralloc">{{getTotal(data.bonds, 'currentAlloc')/1000 | percent}}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -36,43 +38,43 @@
   <table mat-table [dataSource]="data.stocks">
 
     <ng-container matColumnDef="name">
-      <td mat-cell *matCellDef="let element">{{element.name}}</td>
-      <td mat-footer-cell *matFooterCellDef class="table-column">Total Stocks</td>
+      <td mat-cell *matCellDef="let element" class="column-name">{{element.name}}</td>
+      <td mat-footer-cell *matFooterCellDef class="column-name">Total Stocks</td>
     </ng-container>
 
     <ng-container matColumnDef="value">
-      <td mat-cell *matCellDef="let element">{{element.value | currency: 'USD' : 'symbol' : '1.0'}}</td>
-      <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(data.stocks, 'value') | currency: 'USD' : 'symbol' : '1.0'}}</td>
+      <td mat-cell *matCellDef="let element" class="table-column-value">{{element.value | currency: 'USD' : 'symbol' : '1.0'}}</td>
+      <td mat-footer-cell *matFooterCellDef class="table-column-value">{{getTotal(data.stocks, 'value') | currency: 'USD' : 'symbol' : '1.0'}}</td>
     </ng-container>
 
     <ng-container matColumnDef="target">
-      <td mat-cell *matCellDef="let element">{{element.target /1000 | percent}}</td>
-      <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(data.stocks, 'target') /1000 | percent}}</td>
+      <td mat-cell *matCellDef="let element" class="table-column-target">{{element.target /1000 | percent}}</td>
+      <td mat-footer-cell *matFooterCellDef class="table-column-target">{{getTotal(data.stocks, 'target') /1000 | percent}}</td>
     </ng-container>
 
     <ng-container matColumnDef="current-allocation">
-      <td mat-cell *matCellDef="let element">{{element.currentAlloc /1000 |percent}}</td>
-      <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(data.stocks, 'currentAlloc')/1000 | percent}}</td>
+      <td mat-cell *matCellDef="let element" class="table-column-curralloc">{{element.currentAlloc /1000 |percent}}</td>
+      <td mat-footer-cell *matFooterCellDef class="table-column-curralloc">{{getTotal(data.stocks, 'currentAlloc')/1000 | percent}}</td>
     </ng-container>
 
     <ng-container matColumnDef="totalPortfolio">
-      <td mat-footer-cell *matFooterCellDef colspan="1">
+      <td mat-footer-cell *matFooterCellDef colspan="1" class="column-name">
         Total Portfolio
       </td>
     </ng-container>
 
     <ng-container matColumnDef="totalValue">
-      <td mat-footer-cell *matFooterCellDef>
+      <td mat-footer-cell *matFooterCellDef class="table-column-value">
         {{getTotal(data.stocks, 'value') + getTotal(data.bonds, 'value') | currency: 'USD' : 'symbol' : '1.0'}}
       </td>
     </ng-container>
     <ng-container matColumnDef="totalPercent">
-      <td mat-footer-cell *matFooterCellDef>
+      <td mat-footer-cell *matFooterCellDef class="table-column-target">
           {{getTotal(data.stocks, 'target') /1000 + getTotal(data.bonds, 'target') /1000 | percent}}
       </td>
     </ng-container>
-    <ng-container matColumnDef="currentPercent">
-      <td mat-footer-cell *matFooterCellDef>
+    <ng-container matColumnDef="currentPercent" class="table-column-curralloc">
+      <td mat-footer-cell *matFooterCellDef class="table-column-curralloc">
         {{((getTotal(data.stocks, 'currentAlloc') + getTotal(data.bonds, 'currentAlloc')))/1000 | percent}}
       </td>
     </ng-container>

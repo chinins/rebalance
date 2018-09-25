@@ -3,7 +3,7 @@ import { ApiClientService } from '../api-client.service';
 import { UserInput } from '../user-input';
 import { ActivatedRoute } from '@angular/router';
 
-const _ = require('lodash');
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-input-table',
@@ -34,14 +34,16 @@ export class InputTableComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.route.parent.params.subscribe(params => this.username = params.username);
-    this.bondsValuechange = _.debounce(this.bondsValuechange, 1000);
+    this.bondsValuechange = _.debounce(this.bondsValuechange, 400);
   }
 
   ngOnInit() {
     const userInput = new UserInput();
     const inputArr = Object.values(userInput);
     this.bonds = inputArr.filter(el => el.type === 'bonds');
+    console.log(this.bonds);
     this.stocks = inputArr.filter(el => el.type === 'stocks');
+    console.log(this.stocks);
     this.client.currentMessage.subscribe((msg) => {
       const user = this.data = JSON.parse(msg);
     });
@@ -59,7 +61,7 @@ export class InputTableComponent implements OnInit {
   }
 
   bondsValuechange(newValue, el, key) {
-
+    console.log(el);
     this.bonds.find(element => element.ticker === el.ticker)[key] = newValue;
     const ticker = el.ticker;
     const indexFund = {
