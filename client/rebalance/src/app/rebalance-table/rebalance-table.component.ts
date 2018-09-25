@@ -27,6 +27,14 @@ export class RebalanceTableComponent implements OnInit {
     this.route.parent.params.subscribe(params => this.username = params.username);
   }
 
+  getStyle (el, key) {
+    if (el[key] > 0) {
+      return 'green';
+    } else {
+      return 'red';
+    }
+  }
+
   ngOnInit() {
     this.client.rebalance(this.username)
       .subscribe(userData => {
