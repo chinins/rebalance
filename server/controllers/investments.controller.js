@@ -5,6 +5,10 @@ const names = require('../ticker-to-names');
 
 const baseUrl = 'https://api.iextrading.com/1.0';
 
+// const integerRound = (num) => {
+//   return Math.round
+// }
+
 const rebalance = async (user) => {
   const { _id, username, investment, ...filtered } = user;
 
@@ -26,15 +30,15 @@ const rebalance = async (user) => {
       ...acc,
       [key]: {
         ...filtered[key],
-        currentAlloc: Number(Number(prices[key] * filtered[key].units / totalSum).toFixed(3)),
+        currentAlloc: Math.round(prices[key] * filtered[key].units / totalSum * 1000),
         ticker: key,
         price: prices[key],
         name: names[key],
-        value: Number(Number(prices[key] * filtered[key].units).toFixed(0)),
-        valueToRebalance: Number(Number((filtered[key].target - filtered[key].units * prices[key]
-          / newSum) * newSum).toFixed(0)),
-        unitsToRebalance: Number(Number(((filtered[key].target - filtered[key].units * prices[key]
-          / newSum) * newSum) / prices[key]).toFixed(0)),
+        value: Math.round(prices[key] * filtered[key].units),
+        valueToRebalance: Math.round((filtered[key].target - filtered[key].units * prices[key]
+          / newSum) * newSum),
+        unitsToRebalance: Math.round(((filtered[key].target - filtered[key].units * prices[key]
+          / newSum) * newSum) / prices[key]),
       },
     }),
     {});

@@ -22,6 +22,8 @@ export class InputTableComponent implements OnInit {
   username: string;
   investment: 0;
 
+  unitsInput;
+
   getTotal (arr, key): number {
     return arr.reduce((acc, el) => acc + el[key], 0);
   }
@@ -31,6 +33,7 @@ export class InputTableComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.route.parent.params.subscribe(params => this.username = params.username);
+    this.bondsValuechange = _.debounce(this.bondsValuechange, 1000);
   }
 
   ngOnInit() {
@@ -52,6 +55,8 @@ export class InputTableComponent implements OnInit {
   }
 
   bondsValuechange(newValue, el, key) {
+    console.log('tick');
+
     this.bonds.find(element => element.ticker === el.ticker)[key] = newValue;
     const ticker = el.ticker;
     const indexFund = {
