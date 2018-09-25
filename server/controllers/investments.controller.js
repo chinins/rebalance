@@ -168,7 +168,6 @@ module.exports.confirmRebalance = async (ctx, next) => {
   if (!username) return next();
 
   let user = await Users.findOne({ username });
-  console.log(user);
 
   if (!user) {
     ctx.body = {
@@ -176,7 +175,6 @@ module.exports.confirmRebalance = async (ctx, next) => {
     };
     ctx.status = 401;
   } else {
-    console.log(user);
     user = await updatePortfolio(user);
     await console.log(user);
     ctx.body = await Users.findOneAndUpdate({ username }, user);
