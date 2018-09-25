@@ -28,11 +28,11 @@ export class RebalanceTableComponent implements OnInit {
   }
 
   onClick (confirmed) {
-    if (!confirmed) {
-      return;
-    }
-    this.client.confirmRebalance(this.username, confirmed)
-      .subscribe(() => console.log('rebalance confirmed'));
+    // if (!confirmed) {
+    //   return;
+    // }
+    // this.client.confirmRebalance(this.username, confirmed)
+    //   .subscribe(() => console.log('rebalance confirmed'));
   }
 
   ngOnInit() {

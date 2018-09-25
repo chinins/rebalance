@@ -17,7 +17,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard/:username/current', pathMatch: 'full' },
       { path: 'input', component: InputTableComponent },
       { path: 'current', component: TableComponent },
-      { path: 'rebalance', component: RebalanceTableComponent }
+      { path: 'rebalance', component: RebalanceTableComponent },
+      { path: ':confirmed', component: TableComponent },
     ]
   },
   { path: 'signin', component: SignInComponent}

@@ -44,8 +44,8 @@ export class ApiClientService {
     });
   }
 
-  confirmRebalance (username, confirmed): Observable<any> {
-    return this.http.put(`${this.baseUrl}/confirm`, confirmed, {
+  confirmRebalance (username): Observable<any> {
+    return this.http.get(`${this.baseUrl}/confirm`, {
       headers: {
         'x-user': username,
       }

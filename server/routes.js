@@ -6,6 +6,6 @@ router.post('/portfolio', investmentController.addIndexFund);
 router.get('/portfolio', investmentController.getPortfolio);
 router.get('/rebalance', investmentController.rebalancePortfolio);
 router.post('/extra', investmentController.addExtra);
-router.put('/confirm', investmentController.confirmRebalance);
+router.get('/confirm', investmentController.confirmRebalance);
 
 module.exports = router;

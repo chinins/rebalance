@@ -15,6 +15,7 @@ export class TableComponent implements OnInit {
   displayedColumns: string[] = ['name', 'value', 'target', 'current-allocation'];
   data: object;
   username: string;
+  confirmed = true;
 
   getTotal (arr, key): number {
     return arr.reduce((acc, el) => acc + el[key], 0);
@@ -24,11 +25,23 @@ export class TableComponent implements OnInit {
     private client: ApiClientService,
     private route: ActivatedRoute
   ) {
-    this.route.parent.params.subscribe(params => this.username = params.username);
+    this.route.parent.params.subscribe(params => {
+      this.username = params.username;
+      // this.confirmed = params.confirmed;
+      // console.log(this.confirmed);
+    });
   }
 
   ngOnInit() {
-    this.client.getUserPortfolio(this.username)
+    if (!this.confirmed) {
+      this.confirmed = false;
+    }
+    console.log(this.confirmed);
+    const getPortfolio = this.confirmed
+      ? this.client.confirmRebalance(this.username)
+      : this.client.getUserPortfolio(this.username);
+
+    getPortfolio
       .subscribe(userData => {
         let { _id, username, ...filtered } = userData;
         filtered = Object.values(filtered);

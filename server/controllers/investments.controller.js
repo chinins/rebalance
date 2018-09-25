@@ -45,6 +45,37 @@ const rebalance = async (user) => {
   return Object.assign(user, await filter);
 };
 
+const updatePortfolio = async (user) => {
+  const { _id, username, investment, ...filtered } = user;
+
+  const prices = await Object.keys(filtered).reduce(async (acc, key) => {
+    const price = await axios(`${baseUrl}/stock/${key}/price`);
+    const prev = await acc;
+    return {
+      ...prev,
+      [key]: price.data,
+    };
+  }, {});
+  const totalSum = await Object.keys(filtered).reduce((sum, n) => sum + filtered[n].units * prices[n], 0);
+  const newSum = totalSum + user.investment;
+
+  const updatedPortfolio = Object
+    .keys(filtered)
+    .reduce((acc, key) => ({
+      ...acc,
+      [key]: {
+        ...filtered[key],
+        value: Math.round(filtered[key].target * newSum),
+        units: Math.round(filtered[key].target * newSum / prices[key]),
+        currentAlloc: Math.round(prices[key] * filtered[key].units / newSum * 1000),
+      },
+    }),
+    {});
+
+  updatedPortfolio.investment = 0;
+  return Object.assign(user, await updatedPortfolio);
+};
+
 module.exports.createUser = async (ctx) => {
   const userData = ctx.request.body;
 
@@ -120,7 +151,6 @@ module.exports.addExtra = async (ctx, next) => {
   if (!username) return next();
 
   const extra = ctx.request.body;
-  console.log(extra);
 
   ctx.body = await Users.findOneAndUpdate({ username }, {
     $set: {
@@ -134,7 +164,8 @@ module.exports.confirmRebalance = async (ctx, next) => {
   const username = ctx.headers['x-user'];
   if (!username) return next();
 
-  const user = await Users.findOne({ username });
+  let user = await Users.findOne({ username });
+  console.log(user);
 
   if (!user) {
     ctx.body = {
@@ -142,7 +173,10 @@ module.exports.confirmRebalance = async (ctx, next) => {
     };
     ctx.status = 401;
   } else {
-    // ctx.body = await rebalance(user);
+    console.log(user);
+    user = await updatePortfolio(user);
+    await console.log(user);
+    ctx.body = await Users.findOneAndUpdate({ username }, user);
     ctx.status = 200;
   }
 };

@@ -47,6 +47,9 @@ export class InputTableComponent implements OnInit {
   }
 
   onSubmit () {
+    if (this.investment === undefined) {
+      this.investment = 0;
+    }
     const investment = {
       investment: this.investment
     };
@@ -55,7 +58,6 @@ export class InputTableComponent implements OnInit {
   }
 
   bondsValuechange(newValue, el, key) {
-    console.log('tick');
 
     this.bonds.find(element => element.ticker === el.ticker)[key] = newValue;
     const ticker = el.ticker;
@@ -66,8 +68,6 @@ export class InputTableComponent implements OnInit {
         target: el.target / 100
       }
     };
-    // _.throttle(this.client.postIndexData(indexFund, 'sobaka')
-    //   .subscribe(() => console.log(indexFund)), 3000);
     this.client.postIndexData(indexFund, this.username)
       .subscribe(() => console.log(indexFund));
   }
