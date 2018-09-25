@@ -20,13 +20,13 @@ export class UserInput {
     target: 0,
     units: 0,
   };
-  VEA: object = {
-    ticker: 'VEA',
-    name: 'Develpd Mkt',
-    type: 'stocks',
-    target: 0,
-    units: 0,
-  };
+  // VEA: object = {
+  //   ticker: 'VEA',
+  //   name: 'Develpd Mkt',
+  //   type: 'stocks',
+  //   target: 0,
+  //   units: 0,
+  // };
   VWO: object = {
     ticker: 'VWO',
     name: 'Emerging Mkt',
@@ -41,13 +41,13 @@ export class UserInput {
     target: 0,
     units: 0,
   };
-  BSV: object = {
-    ticker: 'BSV',
-    name: 'Short-term Bonds',
-    type: 'bonds',
-    target: 0,
-    units: 0,
-  };
+  // BSV: object = {
+  //   ticker: 'BSV',
+  //   name: 'Short-term Bonds',
+  //   type: 'bonds',
+  //   target: 0,
+  //   units: 0,
+  // };
   VCSH: object = {
     ticker: 'VCSH',
     name: 'Corporate Bonds',
