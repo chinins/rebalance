@@ -20,6 +20,7 @@ export class InputTableComponent implements OnInit {
   bonds: {} [];
   stocks: {} [];
   username: string;
+  investment: 0;
 
   getTotal (arr, key): number {
     return arr.reduce((acc, el) => acc + el[key], 0);
@@ -40,6 +41,14 @@ export class InputTableComponent implements OnInit {
     this.client.currentMessage.subscribe((msg) => {
       const user = this.data = JSON.parse(msg);
     });
+  }
+
+  onSubmit () {
+    const investment = {
+      investment: this.investment
+    };
+    this.client.addInvestment(this.username, investment)
+      .subscribe(() => console.log(investment));
   }
 
   bondsValuechange(newValue, el, key) {

@@ -15,7 +15,7 @@ export class ApiClientService {
   ) { }
 
   getUserPortfolio (username): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/rebalance`, {
+    return this.http.get<any>(`${this.baseUrl}/portfolio`, {
       headers: {
         'x-user': username
       }
@@ -46,6 +46,14 @@ export class ApiClientService {
 
   confirmRebalance (username, confirmed): Observable<any> {
     return this.http.put(`${this.baseUrl}/confirm`, confirmed, {
+      headers: {
+        'x-user': username,
+      }
+    });
+  }
+
+  addInvestment (username, investment): Observable<any> {
+    return this.http.post(`${this.baseUrl}/extra`, investment, {
       headers: {
         'x-user': username,
       }

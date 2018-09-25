@@ -6,7 +6,7 @@ const names = require('../ticker-to-names');
 const baseUrl = 'https://api.iextrading.com/1.0';
 
 const rebalance = async (user) => {
-  const { _id, username, ...filtered } = user;
+  const { _id, username, investment, ...filtered } = user;
 
   const prices = await Object.keys(filtered).reduce(async (acc, key) => {
     const price = await axios(`${baseUrl}/stock/${key}/price`);
@@ -18,6 +18,7 @@ const rebalance = async (user) => {
   }, {});
 
   const totalSum = Object.keys(filtered).reduce((sum, n) => sum + filtered[n].units * prices[n], 0);
+  const newSum = totalSum + user.investment;
 
   const filter = Object
     .keys(filtered)
@@ -30,8 +31,10 @@ const rebalance = async (user) => {
         price: prices[key],
         name: names[key],
         value: Number(Number(prices[key] * filtered[key].units).toFixed(0)),
-        valueToRebalance: Number(Number((filtered[key].target - filtered[key].units * prices[key] / totalSum) * totalSum).toFixed(0)),
-        unitsToRebalance: Number(Number(((filtered[key].target - filtered[key].units * prices[key] / totalSum) * totalSum) / prices[key]).toFixed(0)),
+        valueToRebalance: Number(Number((filtered[key].target - filtered[key].units * prices[key]
+          / newSum) * newSum).toFixed(0)),
+        unitsToRebalance: Number(Number(((filtered[key].target - filtered[key].units * prices[key]
+          / newSum) * newSum) / prices[key]).toFixed(0)),
       },
     }),
     {});
@@ -51,6 +54,7 @@ module.exports.createUser = async (ctx) => {
   } else {
     user = {
       username: userData.username,
+      investment: 0,
     };
     ctx.body = await Users.insert(user);
     ctx.status = 200;
@@ -105,6 +109,21 @@ module.exports.rebalancePortfolio = async (ctx, next) => {
     ctx.body = await rebalance(user);
     ctx.status = 200;
   }
+};
+
+module.exports.addExtra = async (ctx, next) => {
+  const username = ctx.headers['x-user'];
+  if (!username) return next();
+
+  const extra = ctx.request.body;
+  console.log(extra);
+
+  ctx.body = await Users.findOneAndUpdate({ username }, {
+    $set: {
+      investment: extra.investment,
+    },
+  });
+  ctx.status = 200;
 };
 
 module.exports.confirmRebalance = async (ctx, next) => {
