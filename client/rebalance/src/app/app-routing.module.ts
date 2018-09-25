@@ -8,8 +8,6 @@ import { TableComponent } from './table/table.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/signin', pathMatch: 'full'},
-  // { path: 'input', component: DashboardComponent },
-  // { path: 'portfolio', component: DashboardComponent },
   {
     path: 'dashboard/:username',
     component: DashboardComponent,

@@ -65,7 +65,7 @@ export class InputTableComponent implements OnInit {
       [`${ticker}`]: {
         type: el.type,
         units: el.units,
-        target: el.target / 100
+        target: Math.round(el.target / 100 * 1000)
       }
     };
     this.client.postIndexData(indexFund, this.username)
@@ -80,7 +80,7 @@ export class InputTableComponent implements OnInit {
       [`${ticker}`]: {
         type: el.type,
         units: el.units,
-        target: el.target / 100
+        target: Math.round(el.target / 100 * 1000)
       }
     };
     this.client.postIndexData(indexFund, this.username)
