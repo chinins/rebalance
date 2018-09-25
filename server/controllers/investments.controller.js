@@ -20,6 +20,7 @@ const rebalance = async (user) => {
       [key]: price.data,
     };
   }, {});
+  console.log(prices);
 
   const totalSum = Object.keys(filtered).reduce((sum, n) => sum + filtered[n].units * prices[n], 0);
   const newSum = totalSum + user.investment;
@@ -65,6 +66,8 @@ const updatePortfolio = async (user) => {
       ...acc,
       [key]: {
         ...filtered[key],
+        name: names[key],
+        ticker: key,
         value: Math.round(filtered[key].target / 1000 * newSum),
         units: Math.round(filtered[key].target / 1000 * newSum / prices[key]),
         currentAlloc: Math.round(prices[key] * filtered[key].units / newSum * 1000),
