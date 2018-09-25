@@ -12,3 +12,33 @@
 .theme
   // use our theme with angular-material-theme mixin
   @include angular-material-theme($theme)
+
+// $custom-typography: mat-typography-config
+//   $font-family: 'Roboto, monospace'
+//   $headline: mat-typography-level(32px, 48px, 700)
+//   $body-1: mat-typography-level(16px, 24px, 500)
+
+@import url('https://fonts.googleapis.com/css?family=Roboto')
+
+body
+  padding: 0
+  margin: 0
+  font-family: 'Roboto'
+
+.mat-raised-button.mat-warn
+  background-color: warn
+  color: white !important
+
+.mat-form-field
+  width: 12em
+  margin-top: 1em
+  font-family: 'Roboto'
+  text-align: center
+
+.matInput placeholder
+  padding-left: 0.5em
+
+.signin-label
+  padding-right: 1em
+  font-size: 1.3em
+  font-family: 'Roboto'

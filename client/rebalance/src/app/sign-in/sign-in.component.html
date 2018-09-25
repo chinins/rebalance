@@ -1,5 +1,7 @@
 <div class="signin-form">
-  <label>username
+  <img src="../../assets/logo.png" class="signin-logo">
+  <div class="signin-title">rebalance</div>
+  <label>
     <mat-form-field>
       <input matInput [(ngModel)]="username" value="username" placeholder="username">
     </mat-form-field>
@@ -11,10 +13,10 @@
   </label> -->
 
   <a href="/dashboard/{{username}}/current">
-    <button mat-raised-button color="accent" >Login</button>
+    <button mat-raised-button color="warn" >Login</button>
   </a>
 
-  <label>username
+  <label>
     <mat-form-field>
       <input matInput [(ngModel)]="usernameNew" value="username" placeholder="username">
     </mat-form-field>
@@ -26,6 +28,6 @@
   </label> -->
 
   <a href="/dashboard/{{usernameNew}}/input">
-    <button mat-raised-button color="accent" (click)="onClick()">Create user</button>
+    <button mat-raised-button color="warn" font="white" class="app-button" (click)="onClick()">Create user</button>
   </a>
 </div>

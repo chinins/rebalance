@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ApiClientService } from '../api-client.service';
 import { UserInput } from '../user-input';
 import { ActivatedRoute } from '@angular/router';
@@ -8,7 +8,8 @@ const _ = require('lodash');
 @Component({
   selector: 'app-input-table',
   templateUrl: './input-table.component.html',
-  styleUrls: ['./input-table.component.sass']
+  styleUrls: ['./input-table.component.sass'],
+  encapsulation: ViewEncapsulation.None
 })
 export class InputTableComponent implements OnInit {
   // @Input() user: {
