@@ -17,8 +17,8 @@
 
     <ng-container matColumnDef="target">
       <th mat-header-cell *matHeaderCellDef class="table-column">Target Allocation</th>
-      <td mat-cell *matCellDef="let element">{{element.target | percent}}</td>
-      <td mat-footer-cell *matFooterCellDef>{{getTotal(data.bonds, 'target') | percent}}</td>
+      <td mat-cell *matCellDef="let element">{{element.target /1000 | percent}}</td>
+      <td mat-footer-cell *matFooterCellDef>{{getTotal(data.bonds, 'target') /1000 | percent}}</td>
     </ng-container>
 
     <ng-container matColumnDef="current-allocation">
@@ -46,8 +46,8 @@
     </ng-container>
 
     <ng-container matColumnDef="target">
-      <td mat-cell *matCellDef="let element">{{element.target*100}}%</td>
-      <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(data.stocks, 'target') | percent}}</td>
+      <td mat-cell *matCellDef="let element">{{element.target /1000 | percent}}</td>
+      <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(data.stocks, 'target') /1000 | percent}}</td>
     </ng-container>
 
     <ng-container matColumnDef="current-allocation">
@@ -68,7 +68,7 @@
     </ng-container>
     <ng-container matColumnDef="totalPercent">
       <td mat-footer-cell *matFooterCellDef>
-          {{getTotal(data.stocks, 'target') + getTotal(data.bonds, 'target') | percent}}
+          {{getTotal(data.stocks, 'target') /1000 + getTotal(data.bonds, 'target') /1000 | percent}}
       </td>
     </ng-container>
     <ng-container matColumnDef="currentPercent">

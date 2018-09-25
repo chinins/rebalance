@@ -63,7 +63,7 @@
 
     <ng-container matColumnDef="totalValue">
       <td mat-footer-cell *matFooterCellDef>
-        {{getTotal(data.stocks, 'value') + getTotal(data.bonds, 'value') + getTotal(data.stocks, 'valueToRebalance') + getTotal(data.bonds, 'valueToRebalance')}}
+        {{getTotal(data.stocks, 'value') + getTotal(data.bonds, 'value') + getTotal(data.stocks, 'valueToRebalance') + getTotal(data.bonds, 'valueToRebalance') | currency: 'USD' : 'symbol' : '1.0'}}
       </td>
     </ng-container>
     <ng-container matColumnDef="unitsToRebalance">

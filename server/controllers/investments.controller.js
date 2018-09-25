@@ -35,9 +35,9 @@ const rebalance = async (user) => {
         price: prices[key],
         name: names[key],
         value: Math.round(prices[key] * filtered[key].units),
-        valueToRebalance: Math.round((filtered[key].target - filtered[key].units * prices[key]
+        valueToRebalance: Math.round((filtered[key].target / 1000 - filtered[key].units * prices[key]
           / newSum) * newSum),
-        unitsToRebalance: Math.round(((filtered[key].target - filtered[key].units * prices[key]
+        unitsToRebalance: Math.round(((filtered[key].target / 1000 - filtered[key].units * prices[key]
           / newSum) * newSum) / prices[key]),
       },
     }),
@@ -65,8 +65,8 @@ const updatePortfolio = async (user) => {
       ...acc,
       [key]: {
         ...filtered[key],
-        value: Math.round(filtered[key].target * newSum),
-        units: Math.round(filtered[key].target * newSum / prices[key]),
+        value: Math.round(filtered[key].target / 1000 * newSum),
+        units: Math.round(filtered[key].target / 1000 * newSum / prices[key]),
         currentAlloc: Math.round(prices[key] * filtered[key].units / newSum * 1000),
       },
     }),
