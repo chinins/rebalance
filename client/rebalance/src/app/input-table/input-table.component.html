@@ -1,8 +1,8 @@
-<div>
+<div class="input-table">
     <div>
-      <label>Investment/Withdrawal, $
+      <label><span class="investment-label">Investment / Withdrawal, $</span>
         <mat-form-field>
-          <input matInput [(ngModel)]="investment" type="number" value="investment" placeholder="0">
+          <input matInput [(ngModel)]="investment" type="number" value="investment">
         </mat-form-field>
       </label>
     </div>
@@ -12,51 +12,51 @@
       <table mat-table [dataSource]="bonds">
 
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef class="table-column">Index</th>
+          <th mat-header-cell *matHeaderCellDef class="column-name">Index</th>
           <td mat-cell *matCellDef="let element">{{element.name}}</td>
-          <td mat-footer-cell *matFooterCellDef colspan="1">Total Bonds</td>
+          <td mat-footer-cell *matFooterCellDef colspan="1"  class="subtotal">Total Bonds</td>
         </ng-container>
 
         <ng-container matColumnDef="units">
-          <th mat-header-cell *matHeaderCellDef class="table-column">Units</th>
+          <th mat-header-cell *matHeaderCellDef class="column-input">Units</th>
           <td mat-cell *matCellDef="let element">
-            <input [ngModel]="element.units" (ngModelChange)="bondsValuechange($event, element, 'units')" type="number" placeholder="0">
+            <input class="table-input" [ngModel]="element.units" (ngModelChange)="bondsValuechange($event, element, 'units')" type="number" placeholder="0">
           </td>
           <td mat-footer-cell *matFooterCellDef>{{getTotal(bonds, 'units')}}</td>
         </ng-container>
 
         <ng-container matColumnDef="target">
-          <th mat-header-cell *matHeaderCellDef class="table-column">Target Allocation, %</th>
+          <th mat-header-cell *matHeaderCellDef class="column-input">Target Allocation, %</th>
           <td mat-cell *matCellDef="let element">
-            <input [ngModel]="element.target" (ngModelChange)="bondsValuechange($event, element, 'target')" type="number" placeholder="0">
+            <input class="table-input" [ngModel]="element.target" (ngModelChange)="bondsValuechange($event, element, 'target')" type="number" placeholder="0">
           </td>
           <td mat-footer-cell *matFooterCellDef>{{getTotal(bonds, 'target')}}%</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns" class="subtotal"></tr>
       </table>
 
       <!-- 2nd table -->
       <table mat-table [dataSource]="stocks">
         <ng-container matColumnDef="name">
           <td mat-cell *matCellDef="let element">{{element.name}}</td>
-          <td mat-footer-cell *matFooterCellDef class="table-column">Total Stocks</td>
+          <td mat-footer-cell *matFooterCellDef class="column-name">Total Stocks</td>
         </ng-container>
 
         <ng-container matColumnDef="units">
           <td mat-cell *matCellDef="let element">
-            <input [ngModel]="element.units" (ngModelChange)="stocksValuechange($event, element, 'units')" type="number" placeholder="0">
+            <input class="table-input" [ngModel]="element.units" (ngModelChange)="stocksValuechange($event, element, 'units')" type="number" placeholder="0">
           </td>
-          <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(stocks, 'units')}}</td>
+          <td mat-footer-cell *matFooterCellDef class="column-input">{{getTotal(stocks, 'units')}}</td>
         </ng-container>
 
         <ng-container matColumnDef="target">
           <td mat-cell *matCellDef="let element">
-              <input [ngModel]="element.target" (ngModelChange)="stocksValuechange($event, element, 'target')" type="number" placeholder="0">
+              <input class="table-input" [ngModel]="element.target" (ngModelChange)="stocksValuechange($event, element, 'target')" type="number" placeholder="0">
           </td>
-          <td mat-footer-cell *matFooterCellDef class="table-column">{{getTotal(stocks, 'target')}}%</td>
+          <td mat-footer-cell *matFooterCellDef class="column-input">{{getTotal(stocks, 'target')}}%</td>
         </ng-container>
 
         <ng-container matColumnDef="totalPortfolio">
