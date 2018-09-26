@@ -33,7 +33,6 @@ export class TableComponent implements OnInit {
     if (!this.confirmed) {
       this.confirmed = false;
     }
-    console.log(this.confirmed);
     const getPortfolio = this.confirmed
       ? this.client.confirmRebalance(this.username)
       : this.client.getUserPortfolio(this.username);
@@ -48,7 +47,6 @@ export class TableComponent implements OnInit {
           bonds,
           stocks
         };
-        console.log(this.data);
       });
 
     // this.client.currentMessage.subscribe((msg) => {

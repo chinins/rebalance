@@ -41,9 +41,7 @@ export class InputTableComponent implements OnInit {
     const userInput = new UserInput();
     const inputArr = Object.values(userInput);
     this.bonds = inputArr.filter(el => el.type === 'bonds');
-    console.log(this.bonds);
     this.stocks = inputArr.filter(el => el.type === 'stocks');
-    console.log(this.stocks);
     this.client.currentMessage.subscribe((msg) => {
       const user = this.data = JSON.parse(msg);
     });
@@ -57,11 +55,11 @@ export class InputTableComponent implements OnInit {
       investment: this.investment
     };
     this.client.addInvestment(this.username, investment)
-      .subscribe(() => console.log(investment));
+      .subscribe(() => {
+      });
   }
 
   bondsValuechange(newValue, el, key) {
-    console.log(el);
     this.bonds.find(element => element.ticker === el.ticker)[key] = newValue;
     const ticker = el.ticker;
     const indexFund = {
@@ -72,7 +70,8 @@ export class InputTableComponent implements OnInit {
       }
     };
     this.client.postIndexData(indexFund, this.username)
-      .subscribe(() => console.log(indexFund));
+      .subscribe(() => {
+      });
   }
 
 
@@ -87,6 +86,7 @@ export class InputTableComponent implements OnInit {
       }
     };
     this.client.postIndexData(indexFund, this.username)
-    .subscribe(() => console.log(indexFund));
+    .subscribe(() => {
+    });
   }
 }

@@ -46,7 +46,6 @@ export class RebalanceTableComponent implements OnInit {
           bonds,
           stocks
         };
-        console.log(this.data);
       });
     // this.client.currentMessage.subscribe((msg) => {
     //   const user = this.data = JSON.parse(msg);
