@@ -1,5 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { ApiClientService } from '../api-client.service';
 
 @Component({
@@ -12,12 +14,26 @@ export class DashboardComponent implements OnInit {
     bonds: object [],
     stocks: object []
   };
+  username;
 
   constructor(
-    private client: ApiClientService
-  ) { }
+    private client: ApiClientService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    console.log('got to router');
+    this.route.parent.params.subscribe(params => {
+      console.log('params', params);
+      this.username = params.username;
+    });
+  }
 
   ngOnInit() {
+    this.username = this.route.parent.paramMap.pipe(
+      switchMap((params: ParamMap) => params.get('username'))
+      );
+    console.log('this.username: ', this.username);
+
     this.getUserPortfolio();
 
   }
@@ -27,9 +43,10 @@ export class DashboardComponent implements OnInit {
   }
 
   getUserPortfolio (): void {
-
-    this.client.getUserPortfolio('sobaka')
+    console.log('this.username: ', this.username);
+    this.client.getUserPortfolio(this.username)
     .subscribe(userData => {
+      console.log('got to subsribed');
       let { _id, username, ...filtered } = userData;
       filtered = Object.values(filtered);
       const bonds = filtered.filter(el => el.type === 'bonds');

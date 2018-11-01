@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ApiClientService } from '../api-client.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -13,7 +14,8 @@ export class SignInComponent implements OnInit {
   usernameNew: string;
 
   constructor(
-    private client: ApiClientService
+    private client: ApiClientService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -21,6 +23,9 @@ export class SignInComponent implements OnInit {
 
   onClick() {
     this.client.createUser(this.usernameNew)
-      .subscribe(() => console.log('got here'));
+      .subscribe(() => {
+        console.log('got here');
+        this.router.navigate(['/dashboard', this.usernameNew, 'input']);
+      });
   }
 }

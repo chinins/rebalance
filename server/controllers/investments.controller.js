@@ -81,6 +81,7 @@ const updatePortfolio = async (user) => {
 
 module.exports.createUser = async (ctx) => {
   const userData = ctx.request.body;
+  console.log('userData: ', userData);
 
   let user = await Users.findOne({ username: userData.username });
 
@@ -95,16 +96,18 @@ module.exports.createUser = async (ctx) => {
       investment: 0,
     };
     ctx.body = await Users.insert(user);
-    ctx.status = 200;
+    ctx.status = 201;
   }
 };
 
 module.exports.getPortfolio = async (ctx, next) => {
-  const username = ctx.headers['x-user'];
+
+  const username = ctx.request.headers['x-user'];
+  console.log('username: ', username);
   if (!username) return next();
 
   let user = await Users.findOne({ username });
-  user = await rebalance(user);
+  console.log('user: ', user);
 
   if (!user) {
     ctx.body = {
@@ -112,6 +115,7 @@ module.exports.getPortfolio = async (ctx, next) => {
     };
     ctx.status = 401;
   } else {
+    user = await rebalance(user);
     ctx.body = user;
     ctx.status = 200;
   }
