@@ -12,10 +12,6 @@ import * as _ from 'lodash';
   encapsulation: ViewEncapsulation.None
 })
 export class InputTableComponent implements OnInit {
-  // @Input() user: {
-  //   bonds: {}[]
-  //   stocks: {}[]
-  // }[];
   displayedColumns: string[] = ['name', 'units', 'target'];
   data: object;
   bonds: any [];

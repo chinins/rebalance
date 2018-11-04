@@ -1,7 +1,5 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ApiClientService } from '../api-client.service';
 
 @Component({
@@ -19,7 +17,6 @@ export class DashboardComponent implements OnInit {
   constructor(
     private client: ApiClientService,
     private route: ActivatedRoute,
-    private router: Router
   ) {
     this.route.params.subscribe(params => {
       this.username = params.username;
@@ -28,10 +25,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getUserPortfolio();
-  }
-
-  onChanges() {
-    // this.getUserPortfolio();
   }
 
   getUserPortfolio (): void {
@@ -48,10 +41,4 @@ export class DashboardComponent implements OnInit {
         this.client.sendData(JSON.stringify(this.user));
       });
   }
-
-  // getBonds (arr): void {
-  //   this.bonds = arr.filter(el => el.type === 'bonds');
-  //   console.log(this.bonds);
-  //   return this.bonds;
-  // }
 }
