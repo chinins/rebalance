@@ -1,5 +1,5 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ApiClientService } from '../api-client.service';
 
 @Component({
@@ -12,23 +12,23 @@ export class DashboardComponent implements OnInit {
     bonds: object [],
     stocks: object []
   };
+  username;
 
   constructor(
-    private client: ApiClientService
-  ) { }
+    private client: ApiClientService,
+    private route: ActivatedRoute,
+  ) {
+    this.route.params.subscribe(params => {
+      this.username = params.username;
+    });
+  }
 
   ngOnInit() {
     this.getUserPortfolio();
-
-  }
-
-  onChanges() {
-    // this.getUserPortfolio();
   }
 
   getUserPortfolio (): void {
-
-    this.client.getUserPortfolio('sobaka')
+    this.client.getUserPortfolio(this.username)
     .subscribe(userData => {
       let { _id, username, ...filtered } = userData;
       filtered = Object.values(filtered);
@@ -41,10 +41,4 @@ export class DashboardComponent implements OnInit {
         this.client.sendData(JSON.stringify(this.user));
       });
   }
-
-  // getBonds (arr): void {
-  //   this.bonds = arr.filter(el => el.type === 'bonds');
-  //   console.log(this.bonds);
-  //   return this.bonds;
-  // }
 }

@@ -8,10 +8,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./table.component.sass']
 })
 export class TableComponent implements OnInit {
-  // @Input() user: {
-  //   bonds: {}[]
-  //   stocks: {}[]
-  // }[];
   displayedColumns: string[] = ['name', 'value', 'target', 'current-allocation'];
   data: object;
   username: string;
@@ -48,9 +44,5 @@ export class TableComponent implements OnInit {
           stocks
         };
       });
-
-    // this.client.currentMessage.subscribe((msg) => {
-    //   this.data = JSON.parse(msg);
-    // });
   }
 }

@@ -8,10 +8,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./rebalance-table.component.sass']
 })
 export class RebalanceTableComponent implements OnInit {
-  // @Input() user: {
-  //   bonds: {}[]
-  //   stocks: {}[]
-  // }[];
   displayedColumns: string[] = ['name', 'units-to-rebalance', 'current-allocation', 'final-value'];
   data: object;
   username: string;
@@ -47,8 +43,5 @@ export class RebalanceTableComponent implements OnInit {
           stocks
         };
       });
-    // this.client.currentMessage.subscribe((msg) => {
-    //   const user = this.data = JSON.parse(msg);
-    // });
   }
 }

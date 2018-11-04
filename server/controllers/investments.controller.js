@@ -1,17 +1,11 @@
-// const _ = require('lodash');
 const axios = require('axios');
 const Users = require('../db');
 const names = require('../ticker-to-names');
 
 const baseUrl = 'https://api.iextrading.com/1.0';
 
-// const integerRound = (num) => {
-//   return Math.round
-// }
-
 const rebalance = async (user) => {
   const { _id, username, investment, ...filtered } = user;
-
   const prices = await Object.keys(filtered).reduce(async (acc, key) => {
     const price = await axios(`${baseUrl}/stock/${key}/price`);
     const prev = await acc;
@@ -20,7 +14,6 @@ const rebalance = async (user) => {
       [key]: price.data,
     };
   }, {});
-  console.log(prices);
 
   const totalSum = Object.keys(filtered).reduce((sum, n) => sum + filtered[n].units * prices[n], 0);
   const newSum = totalSum + user.investment;
@@ -95,16 +88,16 @@ module.exports.createUser = async (ctx) => {
       investment: 0,
     };
     ctx.body = await Users.insert(user);
-    ctx.status = 200;
+    ctx.status = 201;
   }
 };
 
 module.exports.getPortfolio = async (ctx, next) => {
-  const username = ctx.headers['x-user'];
+
+  const username = ctx.request.headers['x-user'];
   if (!username) return next();
 
   let user = await Users.findOne({ username });
-  user = await rebalance(user);
 
   if (!user) {
     ctx.body = {
@@ -112,6 +105,7 @@ module.exports.getPortfolio = async (ctx, next) => {
     };
     ctx.status = 401;
   } else {
+    user = await rebalance(user);
     ctx.body = user;
     ctx.status = 200;
   }
@@ -176,7 +170,6 @@ module.exports.confirmRebalance = async (ctx, next) => {
     ctx.status = 401;
   } else {
     user = await updatePortfolio(user);
-    await console.log(user);
     ctx.body = await Users.findOneAndUpdate({ username }, user);
     ctx.status = 200;
   }
