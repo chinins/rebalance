@@ -1,6 +1,9 @@
 # Rebalance
 Rebalance is an app to reblance investment portfolio between bonds and stocks index funds.
 
+## Screenshots
+<img src="./docs/combined.png"/>
+
 ## Getting started
 
 ### Prerequisites
