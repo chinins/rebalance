@@ -24,7 +24,7 @@ export class SignInComponent implements OnInit {
   onClick() {
     this.client.createUser(this.usernameNew)
       .subscribe(() => {
-        console.log('got here');
+        console.log(this.usernameNew);
         this.router.navigate(['/dashboard', this.usernameNew, 'input']);
       });
   }

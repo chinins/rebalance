@@ -18,8 +18,8 @@ export class InputTableComponent implements OnInit {
   // }[];
   displayedColumns: string[] = ['name', 'units', 'target'];
   data: object;
-  bonds: {} [];
-  stocks: {} [];
+  bonds: any [];
+  stocks: any [];
   username: string;
   investment: 0;
 
@@ -60,7 +60,7 @@ export class InputTableComponent implements OnInit {
   }
 
   bondsValuechange(newValue, el, key) {
-    this.bonds.find(element => element === el.ticker)[key] = newValue;
+    this.bonds.find(element => element.ticker === el.ticker)[key] = newValue;
     const ticker = el.ticker;
     const indexFund = {
       [`${ticker}`]: {
@@ -76,7 +76,7 @@ export class InputTableComponent implements OnInit {
 
 
   stocksValuechange(newValue, el, key) {
-    this.stocks.find(element => element === el.ticker)[key] = newValue;
+    this.stocks.find(element => element.ticker === el.ticker)[key] = newValue;
     const ticker = el.ticker;
     const indexFund = {
       [`${ticker}`]: {

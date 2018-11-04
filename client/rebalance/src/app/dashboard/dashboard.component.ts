@@ -21,21 +21,13 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    console.log('got to router');
-    this.route.parent.params.subscribe(params => {
-      console.log('params', params);
+    this.route.params.subscribe(params => {
       this.username = params.username;
     });
   }
 
   ngOnInit() {
-    this.username = this.route.parent.paramMap.pipe(
-      switchMap((params: ParamMap) => params.get('username'))
-      );
-    console.log('this.username: ', this.username);
-
     this.getUserPortfolio();
-
   }
 
   onChanges() {
@@ -43,10 +35,8 @@ export class DashboardComponent implements OnInit {
   }
 
   getUserPortfolio (): void {
-    console.log('this.username: ', this.username);
     this.client.getUserPortfolio(this.username)
     .subscribe(userData => {
-      console.log('got to subsribed');
       let { _id, username, ...filtered } = userData;
       filtered = Object.values(filtered);
       const bonds = filtered.filter(el => el.type === 'bonds');

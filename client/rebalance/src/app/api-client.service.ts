@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiClientService {
-  private baseUrl: 'http://localhost:3002';
+  private baseUrl: String = 'http://localhost:3002';
   private dataSource = new BehaviorSubject('');
   currentMessage = this.dataSource.asObservable();
 
